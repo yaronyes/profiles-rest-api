@@ -4,13 +4,16 @@ services:
     profiles_project:
         build:
             context: .
-        ports: 
-            - "8000:8000"
+        #ports: 
+        #    - "8000:8000"
+        expose:
+            - 8000
         volumes: 
-            - ./profiles_project:/profiles_project
+            - static_volume:/vol/web/static
         command: >
             sh -c "python manage.py wait_for_db &&
                   python manage.py migrate &&
+                  python manage.py collectstatic  &&
                   gunicorn profiles_project.wsgi --bind 0.0.0.0:8000"
 # python manage.py runserver 0.0.0.0:8000"                  
         environment: 
@@ -20,6 +23,7 @@ services:
             - DB_PASS=supersecretpassword
         depends_on: 
             - db
+        restart: always
     
     db:
         image: postgres:12-alpine
@@ -27,3 +31,15 @@ services:
             - POSTGRES_DB=profiles_project
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=supersecretpassword
+        restart: always
+    nginx:
+        build: ./nginx        
+        volumes:
+            - static_volume:/vol/web/static
+        ports:
+            - 1337:80
+        depends_on:
+            - profiles_project
+        restart: always
+volumes:    
+    static_volume:
