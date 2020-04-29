@@ -24,4 +24,4 @@ class UserAdmin(BaseUserAdmin):
     )
     
     
-admin.site.register(models.UserPorfile, UserAdmin)
+admin.site.register(models.UserProfile, UserAdmin)
