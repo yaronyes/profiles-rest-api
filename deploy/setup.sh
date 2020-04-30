@@ -27,6 +27,8 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 # PROJECT_BASE_PATH/env/bin/python manage.py migrate
 # PROJECT_BASE_PATH/env/bin/python manage.py collectstatic --noinput
 
+sudo docker-compose up
+
 # build the containers using docker-compose
 cd $PROJECT_BASE_PATH
 docker-compose -f docker-compose.prod.yml build
