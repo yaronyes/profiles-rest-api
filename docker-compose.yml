@@ -4,7 +4,7 @@ services:
     profiles_project:
         build:
             context: .
-        #ports: 
+        # ports: 
         #    - "8000:8000"
         expose:
             - 8000
@@ -16,7 +16,10 @@ services:
                   python manage.py collectstatic --no-input &&
                   gunicorn profiles_project.wsgi --bind 0.0.0.0:8000"
 # python manage.py runserver 0.0.0.0:8000"                  
-        environment: 
+        environment:
+            - DEBUG=1
+            - SECRET_KEY=v9hu+2=)!s#s9176uzg_*x2=wtpjq7*)2a04kp+-3qunre)yvs
+            - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
             - DB_HOST=db
             - DB_NAME=profiles_project
             - DB_USER=postgres
