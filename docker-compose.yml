@@ -12,8 +12,8 @@ services:
             - static_volume:/vol/web/static
         command: >
             sh -c "python manage.py wait_for_db &&
-                  python manage.py migrate &&
-                  python manage.py collectstatic  &&
+                  python manage.py migrate --no-input &&
+                  python manage.py collectstatic --no-input &&
                   gunicorn profiles_project.wsgi --bind 0.0.0.0:8000"
 # python manage.py runserver 0.0.0.0:8000"                  
         environment: 
@@ -27,6 +27,8 @@ services:
     
     db:
         image: postgres:12-alpine
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
         environment: 
             - POSTGRES_DB=profiles_project
             - POSTGRES_USER=postgres
@@ -43,3 +45,4 @@ services:
         restart: always
 volumes:    
     static_volume:
+    postgres_data:
