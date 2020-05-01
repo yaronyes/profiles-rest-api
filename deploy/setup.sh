@@ -37,11 +37,11 @@ sudo chmod +x /usr/local/bin/docker-compose
 # build the containers using docker-compose
 cd $PROJECT_BASE_PATH
 sudo docker-compose -f docker-compose.prod.yml build
-sudu docker-compose -f docker-compose.prod.yml run --rm profiles_project sh -c "python manage.py migrate --noinput"
+sudo docker-compose -f docker-compose.prod.yml run --rm profiles_project sh -c "python manage.py migrate --noinput"
 sudo docker-compose -f docker-compose.prod.yml run --rm profiles_project sh -c "python manage.py collectstatic --no-input --clear"
 
 # Configure supervisor
-cp $PROJECT_BASE_PATH/deploy/supervisor_profiles_api.conf /etc/supervisor/conf.d/profiles_api.conf
+sudo cp $PROJECT_BASE_PATH/deploy/supervisor_profiles_api.conf /etc/supervisor/conf.d/profiles_api.conf
 sudo supervisorctl reread
 sudo supervisorctl update
 sudo supervisorctl restart profiles_api
