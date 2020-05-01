@@ -37,7 +37,7 @@ services:
         volumes:
             - static_volume:/vol/web/static
         ports:
-            - 1337:80
+            - 80:80
         depends_on:
             - profiles_project
         restart: always
